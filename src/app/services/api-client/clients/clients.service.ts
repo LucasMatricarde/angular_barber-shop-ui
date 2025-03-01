@@ -1,9 +1,32 @@
 import { Injectable } from '@angular/core';
+import { IClientsService } from './iclients.service';
+import { Observable } from 'rxjs';
+import { SaveClientRequest, SaveClientResponse, UpdateClientRequest, UpdateClientResponse, ListClientResponse, DetailClientResponse } from './client.models';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ClientsService {
+export class ClientsService implements IClientsService {
 
-  constructor() { }
+  private readonly basePath = environment.apiUrl
+
+  constructor(private http: HttpClient) { }
+
+  saveClient(request: SaveClientRequest): Observable<SaveClientResponse> {
+    return this.http.post<SaveClientResponse>(`${this.basePath}clients`, request);
+  }
+  updateClient(id: number, request: UpdateClientRequest): Observable<UpdateClientResponse> {
+    return this.http.put<SaveClientResponse>(`${this.basePath}clients/${id}`, request);
+  }
+  deleteClient(id: number): Observable<void> {
+    return this.http.post<SaveClientResponse>(`${this.basePath}clients`, request);
+  }
+  listClients(): Observable<ListClientResponse[]> {
+    return this.http.post<SaveClientResponse>(`${this.basePath}clients`, request);
+  }
+  findById(id: number): Observable<DetailClientResponse> {
+    return this.http.post<SaveClientResponse>(`${this.basePath}clients`, request);
+  }
 }
